@@ -6,31 +6,20 @@ import { User } from './users/user.model'
 export class AppService {
     resultUsers: User[] = []
     getHello(): string {
-        return 'Hello World!'
+        return 'Find out your non-followers!'
     }
 
     async getNonFollowingUsers(username: string): Promise<User[]> {
         const linkFollowing = 'https://api.github.com/users/' + username + '/following'
         const linkFollowers = 'https://api.github.com/users/' + username + '/followers'
-        // fetch following users via axios
-        const following = (await axios
-            .get(linkFollowing)
-            .then((res) => res.data)
-            .catch((error) => {
-                console.log(error)
-            })) as unknown as User[]
+        // fetch following users via axios and get only { id, login, html_url }
+        const following = (await axios.get<User[]>(linkFollowing)).data
         // fetch followers via axios
-        const followers = (await axios
-            .get(linkFollowers)
-            .then((res) => res.data)
-            .catch((error) => {
-                console.log(error)
-            })) as unknown as User[]
-        // check if user is following or follower
-        // return users
+        const followers = (await axios.get<User[]>(linkFollowers)).data
+        // check if user is following or follower return users
         this.resultUsers = following.filter((user) => {
             return !followers.some((follower) => {
-                return follower.login === user.login
+                return follower.id === user.id
             })
         })
         return this.resultUsers
