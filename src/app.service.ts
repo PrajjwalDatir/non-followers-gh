@@ -4,8 +4,8 @@ import { User } from './users/user.model'
 
 @Injectable()
 export class AppService {
-    getHello(): string {
-        return 'Find out your non-followers!'
+    getHome(): string {
+        return '<h3 style="text-align:center;">Find out your non-followers on GitHub!</h3><br><h4 style="text-align:center;">Available Routes</h4> <ol style="text-align:center;"><li>/</li><li>/:username</li></ol>'
     }
 
     async getNonFollowingUsers(username: string): Promise<string | User[]> {
