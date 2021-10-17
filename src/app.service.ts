@@ -4,24 +4,32 @@ import { User } from './users/user.model'
 
 @Injectable()
 export class AppService {
-    resultUsers: User[] = []
     getHello(): string {
         return 'Find out your non-followers!'
     }
 
-    async getNonFollowingUsers(username: string): Promise<User[]> {
+    async getNonFollowingUsers(username: string): Promise<string | User[]> {
         const linkFollowing = 'https://api.github.com/users/' + username + '/following'
         const linkFollowers = 'https://api.github.com/users/' + username + '/followers'
         // fetch following users via axios and get only { id, login, html_url }
-        const following = (await axios.get<User[]>(linkFollowing)).data
+        const following = (await axios.get<User[]>(linkFollowing)).data?.map((user) => ({
+            id: user.id || null,
+            login: user.login || '',
+            html_url: user.html_url || '',
+        }))
         // fetch followers via axios
-        const followers = (await axios.get<User[]>(linkFollowers)).data
+        const followers = (await axios.get<User[]>(linkFollowers)).data?.map((user) => ({
+            id: user.id || '',
+            login: user.login || '',
+            html_url: user.html_url || '',
+        }))
         // check if user is following or follower return users
-        this.resultUsers = following.filter((user) => {
+        if (!followers || !following) return 'Failed to fetch'
+        const resultUsers = following.filter((user) => {
             return !followers.some((follower) => {
                 return follower.id === user.id
             })
         })
-        return this.resultUsers
+        return resultUsers
     }
 }

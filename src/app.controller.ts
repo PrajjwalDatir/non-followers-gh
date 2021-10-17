@@ -12,7 +12,7 @@ export class AppController {
     }
 
     @Get('/:username')
-    async getNonFollowingUsers(@Param('username') username: string): Promise<User[]> {
+    async getNonFollowingUsers(@Param('username') username: string): Promise<string | User[]> {
         // pass the username to the service
         return await this.appService.getNonFollowingUsers(username)
     }
