@@ -1,12 +1,19 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Param } from '@nestjs/common'
+import { AppService } from './app.service'
+import { User } from './users/user.model'
 
-@Controller()
+@Controller('/')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+    constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
+    @Get()
+    getHello(): string {
+        return this.appService.getHello()
+    }
+
+    @Get('/:username')
+    async getNonFollowingUsers(@Param('username') username: string): Promise<User[]> {
+        // pass the username to the service
+        return await this.appService.getNonFollowingUsers(username)
+    }
 }
