@@ -10,8 +10,8 @@ exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
 let AppService = class AppService {
-    getHello() {
-        return 'Find out your non-followers!';
+    getHome() {
+        return '<h3 style="text-align:center;">Find out your non-followers on GitHub!</h3><br><h4 style="text-align:center;">Available Routes</h4> <ol style="text-align:center;"><li>/</li><li>/:username</li></ol>';
     }
     async getNonFollowingUsers(username) {
         var _a, _b;

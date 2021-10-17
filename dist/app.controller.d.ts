@@ -3,6 +3,6 @@ import { User } from './users/user.model';
 export declare class AppController {
     private readonly appService;
     constructor(appService: AppService);
-    getHello(): string;
+    getHome(): string;
     getNonFollowingUsers(username: string): Promise<string | User[]>;
 }
