@@ -1,10 +1,10 @@
 {
   "name": "non-followers-gh",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Non-Followers For GitHub is an API which lets you find the people who don't follow you back. Use case is totally upto you! Go Nuts.",
+  "author": "PrajjwalDatir",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
